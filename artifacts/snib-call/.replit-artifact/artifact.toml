@@ -15,11 +15,11 @@ paths = [ "/" ]
 localPort = 22826
 
 [services.development]
-run = "pnpm --filter @workspace/snib-call run dev"
+run = "pnpm --filter snib-call run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/snib-call", "run", "build" ]
-publicDir = "artifacts/snib-call/dist/public"
+build = [ "pnpm", "--filter", "snib-call", "run", "build" ]
+publicDir = "artifacts/snib-call/dist"
 serve = "static"
 
 [[services.production.rewrites]]
