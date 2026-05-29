@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "SNIB Call"
+version = "1.0.0"
+id = "artifacts/snib-call"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22826
+
+[services.development]
+run = "pnpm --filter @workspace/snib-call run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/snib-call", "run", "build" ]
+publicDir = "artifacts/snib-call/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22826"
+BASE_PATH = "/"
