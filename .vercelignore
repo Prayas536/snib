@@ -1,0 +1,12 @@
+# Ignore workspace files that should not be uploaded to Vercel
+node_modules
+**/node_modules
+pnpm-lock.yaml
+pnpm-workspace.yaml
+/.git
+.vscode
+*.log
+dist
+apps/ui-sandbox
+attached_assets
+packages/api-spec
