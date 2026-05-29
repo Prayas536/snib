@@ -1,5 +1,6 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useMouseParallax } from '@/hooks/useMouseParallax';
 
 const NODES = [
   { id: 'NYC', x: 300, y: 250, r: 14, name: 'NYC' },
@@ -180,13 +181,45 @@ function NetworkVisualization() {
 }
 
 export default function NetworkSection() {
+  const { springX, springY } = useMouseParallax();
+
+  // Left content drifts one direction
+  const contentX = useTransform(springX, [-1, 1], [-12, 12]);
+  const contentY = useTransform(springY, [-1, 1], [-8, 8]);
+
+  // Network visualization drifts opposite (creates counter-parallax depth)
+  const vizX = useTransform(springX, [-1, 1], [18, -18]);
+  const vizY = useTransform(springY, [-1, 1], [10, -10]);
+
+  // Background glow follows mouse
+  const bgX = useTransform(springX, [-1, 1], [-35, 35]);
+  const bgY = useTransform(springY, [-1, 1], [-25, 25]);
+
+  // Bullets at increasing depth
+  const b0x = useTransform(springX, [-1, 1], [-6, 6]);
+  const b1x = useTransform(springX, [-1, 1], [-10, 10]);
+  const b2x = useTransform(springX, [-1, 1], [-14, 14]);
+  const bulletTransforms = [b0x, b1x, b2x];
+
   return (
     <section id="network" className="py-32 relative z-10 w-full overflow-hidden border-t border-white/5">
-      <div className="max-w-[1280px] mx-auto px-6">
+      {/* Parallax background glow */}
+      <motion.div
+        style={{ x: bgX, y: bgY }}
+        className="absolute inset-0 z-0 pointer-events-none"
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[130px]" />
+      </motion.div>
+
+      <div className="max-w-[1280px] mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
-          
-          <div className="w-full lg:w-[40%] flex flex-col items-start">
-            <motion.h2 
+
+          {/* Left content — parallax left-drift */}
+          <motion.div
+            style={{ x: contentX, y: contentY }}
+            className="w-full lg:w-[40%] flex flex-col items-start"
+          >
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -212,6 +245,7 @@ export default function NetworkSection() {
               ].map((bullet, idx) => (
                 <motion.div
                   key={idx}
+                  style={{ x: bulletTransforms[idx] }}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -224,11 +258,15 @@ export default function NetworkSection() {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="w-full lg:w-[60%] flex justify-center mt-10 lg:mt-0">
+          {/* Network viz — counter-parallax (moves opposite) */}
+          <motion.div
+            style={{ x: vizX, y: vizY }}
+            className="w-full lg:w-[60%] flex justify-center mt-10 lg:mt-0"
+          >
             <NetworkVisualization />
-          </div>
+          </motion.div>
 
         </div>
       </div>
