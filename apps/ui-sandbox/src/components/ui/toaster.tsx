@@ -1,4 +1,8 @@
+<<<<<<< HEAD:apps/ui-sandbox/src/components/ui/toaster.tsx
 import { useToast } from "@/hooks/useToast"
+=======
+import { useToast } from "@/hooks/useToast";
+>>>>>>> b0339c51dfd079c07e92e8a339345bac22a4e52a:artifacts/snib-call/src/components/ui/toaster.tsx
 import {
   Toast,
   ToastClose,
@@ -6,10 +10,10 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/ui/toast"
+} from "@/components/ui/toast";
 
 export function Toaster() {
-  const { toasts } = useToast()
+  const { toasts } = useToast();
 
   return (
     <ToastProvider>
@@ -25,9 +29,9 @@ export function Toaster() {
             {action}
             <ToastClose />
           </Toast>
-        )
+        );
       })}
       <ToastViewport />
     </ToastProvider>
-  )
+  );
 }
