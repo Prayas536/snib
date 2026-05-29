@@ -14,11 +14,11 @@ export default function HeroSection() {
   const gridX = useTransform(springX, [-1, 1], [-10, 10]);
   const gridY = useTransform(springY, [-1, 1], [-10, 10]);
 
-  // Mascot layer 5
-  const mascotX = useTransform(springX, [-1, 1], [-22, 22]);
-  const mascotY = useTransform(springY, [-1, 1], [-22, 22]);
-  const rotateX = useTransform(springY, [-1, 1], [6, -6]);
-  const rotateY = useTransform(springX, [-1, 1], [-6, 6]);
+  // Mascot layer 5 — amplified movement
+  const mascotX = useTransform(springX, [-1, 1], [-55, 55]);
+  const mascotY = useTransform(springY, [-1, 1], [-40, 40]);
+  const rotateX = useTransform(springY, [-1, 1], [18, -18]);
+  const rotateY = useTransform(springX, [-1, 1], [-18, 18]);
 
   // Specular flares layer 8
   const flareX = useTransform(springX, [-1, 1], [-40, 40]);
